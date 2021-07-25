@@ -36,6 +36,7 @@ func (s *Seeder) Seed(generators ...RecordGenerator) {
 					continue
 				}
 			}
+			s.logger.Debug().Msgf("Seed %s with %d bytes and ttl of %d seconds", record.key, len(record.value), record.ttl)
 		}
 	}
 
