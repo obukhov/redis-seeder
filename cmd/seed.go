@@ -37,46 +37,46 @@ var fillCmd = &cobra.Command{
 		hexGenerator := seeder.NewRandStringGenerator(4, 10, 'a', 'b', 'd', 'e', 'f', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 		s.Seed(
 			seeder.NewGenericRecordGenerator(
+				1000,
+				seeder.NewPatternStringGenerator(
+					"%s:%s:%s",
+					seeder.NewEnumStringGenerator("dev", "prod"),
+					seeder.NewEnumStringGenerator("user", "sku", "events"),
+					hexGenerator,
+				),
+				seeder.NewRandStringGenerator(100, 500, '1', '0'),
+				seeder.NewIntRangeGenerator(3600, 86400),
+			),
+
+			seeder.NewGenericRecordGenerator(
 				2000,
 				seeder.NewPatternStringGenerator(
-					"%s:%s:%s:content",
-					seeder.NewEnumStringGenerator("dev", "prod"),
-					seeder.NewEnumStringGenerator("blogpost", "article", "news", "collections", "events"),
+					"prod:content-%s:%s",
+					seeder.NewEnumStringGenerator("blogpost", "article", "news", "news", "collections", "events"),
 					seeder.NewIntRangeStringGenerator(1, 20),
 				),
-				seeder.NewRandStringGenerator(100, 1000, '1', '0'),
+				seeder.NewRandStringGenerator(100, 10000, '1', '0'),
 				seeder.NewIntRangeGenerator(3600, 86400),
 			),
 			seeder.NewGenericRecordGenerator(
 				2000,
 				seeder.NewPatternStringGenerator(
-					"%s:%s:%s:comment:%s",
-					seeder.NewEnumStringGenerator("dev", "prod"),
-					seeder.NewEnumStringGenerator("blogpost", "article", "news", "collections", "events"),
-					seeder.NewIntRangeStringGenerator(1, 20),
+					"prod:%s:%s:comment:%s",
+					seeder.NewEnumStringGenerator("products", "sku", "prices", "collections", "events"),
+					seeder.NewIntRangeStringGenerator(1, 2000),
 					seeder.NewIntRangeStringGenerator(1, 1000),
 				),
 				seeder.NewRandStringGenerator(100, 1000, '1', '0'),
 				seeder.NewIntRangeGenerator(3600, 86400),
 			),
+
 			seeder.NewGenericRecordGenerator(
-				500,
+				1000,
 				seeder.NewPatternStringGenerator(
-					"%s:user:%s:profile",
-					seeder.NewEnumStringGenerator("dev", "prod"),
+					"mutex:%s",
 					hexGenerator,
 				),
-				seeder.NewRandStringGenerator(100, 1000, '1', '0'),
-				seeder.NewIntRangeGenerator(3600, 86400),
-			),
-			seeder.NewGenericRecordGenerator(
-				500,
-				seeder.NewPatternStringGenerator(
-					"%s:friends:foobar:%s:profile",
-					seeder.NewEnumStringGenerator("dev", "prod"),
-					hexGenerator,
-				),
-				seeder.NewRandStringGenerator(100, 1000, '1', '0'),
+				seeder.NewRandStringGenerator(1, 10, '1', '0'),
 				seeder.NewIntRangeGenerator(3600, 86400),
 			),
 		)
